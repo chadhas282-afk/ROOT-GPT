@@ -41,6 +41,16 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
 ))}
 
     </div>
+
+    <div onClick = {() => {navigate("/community")}}
+     className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 transition-all'>
+      <img src={assets.gallery_icon} alt="gallery" className = "w-4.5 not-dark:invert"/>
+      <div className='text-xs flex flex-col'>
+        <p>Community Images</p>
+      </div>
+    </div>
+
+
     </div>
   );
 }
