@@ -4,11 +4,11 @@ import { useAppContext } from '../context/AppContext';
 import { assets } from "../assets/assets";
 import moment from "moment"
 
-const SideBar = () => {
-const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
+const SideBar = ({isMenuOpen, setIsMenuOpen}) => {
+const { chats, setSelectedChats, theme, setTheme, user, navigate } = useAppContext();
   const [search, setSearch] = useState("");
   return (
-    <div className = "flex flex-col h-screen min-w-72 p-5 dark:bg-linear-to-b from-[#242124]/30 to-[#000000]/30 border-r border-[#80609F]/30 backdrop-blur-3xl transition-all duration-500 max-md:absolute left-0 z-1">
+    <div className={`flex flex-col h-screen min-w-72 p-5 dark:bg-linear-to-b from-[#242124]/30 to-[#000000]/30 border-r border-[#80609F]/30 backdrop-blur-3xl transition-all duration-500 max-md:absolute left-0 z-1 ${!isMenuOpen ? "max-md:-translate-x-full" : "max-md:translate-x-0"} md:translate-x-0`}>
       <img src={theme === "dark" ? assets.logo_full : assets.logo_full_dark} alt="" className="w-full max-w-48" />
     <button className = "flex justify-center items-center w-full py-2 mt-10 text-white bg-linear-to-r from-[#A456F7] to-[#3D81F6] text-sm rounded-md cursor-pointer">
       <span className="mr-2 text-xl">+</span> New Chat
@@ -26,7 +26,8 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
   chat.messages[0]?.content?.toLowerCase().includes(search.toLowerCase()) ||
   chat.name?.toLowerCase().includes(search.toLowerCase())
 ).map((chat) => (
-  <div key={chat._id} className="p-2 px-4 dark:bg-[#57317C]/10 border border-gray-300 rounded-md flex justify-between cursor-pointer group" onClick={() => setSelectedChats(chat)}>
+  <div onClick={() => {navigate("/"); setSelectedChats(chat); setIsMenuOpen(false)}} 
+  key={chat._id} className="p-2 px-4 dark:bg-[#57317C]/10 border border-gray-300 rounded-md flex justify-between cursor-pointer group">
     <div className="flex-1 min-w-0">
       <p className="text-sm font-medium truncate">
         {chat.messages?.length > 0 ? chat.messages[0].content.slice(0, 32) : chat.name}
@@ -42,7 +43,7 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
 
     </div>
 
-    <div onClick = {() => {navigate("/community")}}
+    <div onClick = {() => {navigate("/community"); setIsMenuOpen(false)}}
      className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 transition-all'>
       <img src={assets.gallery_icon} alt="gallery" className = "w-4.5 not-dark:invert"/>
       <div className='text-xs flex flex-col'>
@@ -50,7 +51,7 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
       </div>
 
     </div>
-    <div onClick = {() => {navigate("/Credits")}}
+    <div onClick = {() => {navigate("/Credits"); setIsMenuOpen(false)}}
      className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 transition-all'>
       <img src={assets.diamond_icon
       } alt="gallery" className = "w-4.5 dark:invert"/>
@@ -79,7 +80,7 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
         user && <img src={assets.logout_icon} alt="gallery" className = "h-5 hidden group-hover:block not-dark:invert cursor-pointer"/>
       }
     </div>
-    <img src={assets.close_icon} alt="" className='absolute top-3 right-3 w-5 h-5 cursor-pointer md:hidden not-dark:invert' />
+    <img onClick={() => setIsMenuOpen(false)} src={assets.close_icon} alt="" className='absolute top-3 right-3 w-5 h-5 cursor-pointer md:hidden not-dark:invert' />
   </div>
   );
 }
