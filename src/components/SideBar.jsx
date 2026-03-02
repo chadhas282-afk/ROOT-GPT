@@ -48,6 +48,7 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
       <div className='text-xs flex flex-col'>
         <p>Community Images</p>
       </div>
+
     </div>
     <div onClick = {() => {navigate("/Credits")}}
      className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 transition-all'>
@@ -64,17 +65,23 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
         <img src={assets.theme_icon} alt="" className='w-4 not-dark:invert'/>
         <p>Dark Mode</p>
       </div>
-      <label className='flex items-center cursor-pointer'>
+      <label className=' inline-flex  items-center cursor-pointer'>
         <input type="checkbox" className='hidden' checked={theme === "dark"} onChange={() => setTheme(theme === "dark" ? "light" : "dark")} />
         <div className='w-10 h-5 bg-gray-300 rounded-full relative'>
           <div className={`dot absolute w-5 h-5 bg-white rounded-full transition-transform duration-300 ${theme === "dark" ? "translate-x-5" : ""}`}></div>
         </div>
       </label>
     </div>
-
-
+      <div className='flex items-center gap-3 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 transition-all group'>
+      <img src={assets.user_icon} alt="gallery" className = "w-7 rounded-full"/>
+      <p className='flex-1 text-sm dark:text-primary truncate'>{user ? user.name : "Login Your Account"}</p>
+      {
+        user && <img src={assets.logout_icon} alt="gallery" className = "h-5 hidden group-hover:block not-dark:invert cursor-pointer"/>
+      }
     </div>
+    {/* <img src={assets.close_icon} alt="" className='abouslute' /> */}
+  </div>
   );
-}
+    }
 
 export default SideBar;

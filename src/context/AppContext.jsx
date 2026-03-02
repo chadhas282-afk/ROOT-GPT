@@ -8,6 +8,7 @@ const dummyUserData = {
     _id: "user_123",
     name: "Sahil Chadha",
     email: "sahil@example.com",
+    credits: 200,
     avatar: "" // Add a URL here if you have one
 };
 
