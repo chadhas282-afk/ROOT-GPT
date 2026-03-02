@@ -49,6 +49,15 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
         <p>Community Images</p>
       </div>
     </div>
+    <div onClick = {() => {navigate("/Credits")}}
+     className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 transition-all'>
+      <img src={assets.diamond_icon
+      } alt="gallery" className = "w-4.5 dark:invert"/>
+      <div className='text-xs flex flex-col'>
+        <p>Credits : {user?.credits}</p>
+        <p className='text-gray-400 text-xs'>Purchase Credits to use more features</p>
+      </div>
+    </div>
 
 
     </div>
