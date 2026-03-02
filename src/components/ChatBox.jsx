@@ -9,6 +9,15 @@ const ChatBox = () => {
   const { selectedChats, theme } = useAppContext();
   const [messages, setMessages] = useState([]);
   const [loading, setLoading] = useState(false);
+
+  const [prompt, setPrompt] = useState("");
+  const [mode, setMode] = useState("text");
+  const [isPublished, setIsPublished] = useState(false);
+
+  const onSubmit = async (e) => {
+    e.preventDefault();
+  }
+
   useEffect(() => {
     if (selectedChats) {
     setMessages(selectedChats.messages);
@@ -41,7 +50,10 @@ const ChatBox = () => {
     </div>
 
     <form>
-
+        <select onChange={(e) => setMode(e.target.value)} value={mode} className='text-sm pl-3 pr-2 outline-none'>
+          <option className='dark:bg-purple-900' value="text">Text</option>
+          <option className='dark:bg-purple-900' value="image">Image</option>
+        </select>
     </form>
 
     </div>
