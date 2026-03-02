@@ -79,9 +79,9 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
         user && <img src={assets.logout_icon} alt="gallery" className = "h-5 hidden group-hover:block not-dark:invert cursor-pointer"/>
       }
     </div>
-    {/* <img src={assets.close_icon} alt="" className='abouslute' /> */}
+    <img src={assets.close_icon} alt="" className='absolute top-3 right-3 w-5 h-5 cursor-pointer md:hidden not-dark:invert' />
   </div>
   );
-    }
+}
 
 export default SideBar;
