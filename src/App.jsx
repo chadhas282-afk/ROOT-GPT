@@ -4,14 +4,14 @@ import SideBar from './components/SideBar';
 import ChatBox from './components/ChatBox';
 import Credits from './pages/Credits';
 import Community from './pages/community';
-import { AppContextProvider } from './context/AppContext';
 import { useState } from 'react';
 import { assets } from './assets/assets';
+import './assets/prism.css';
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   return (
-    <AppContextProvider> 
+    <> 
       {
         !isMenuOpen && <img src={assets.menu_icon} alt="menu" className='w-8 h-8 absolute top-3 left-3 cursor-pointer md:hidden not-dark:invert' onClick={() => setIsMenuOpen(true)} />
       }
@@ -25,7 +25,7 @@ const App = () => {
           </Routes>
         </div>
       </div>
-    </AppContextProvider>
+    </>
   );
 }
 
