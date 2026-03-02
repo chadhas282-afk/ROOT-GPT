@@ -59,6 +59,19 @@ const { chats, setSelectedChats, theme, setTheme, user } = useAppContext();
       </div>
     </div>
 
+    <div className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md '>
+      <div className='flex items-center gap-2 text-sm'>
+        <img src={assets.theme_icon} alt="" className='w-4 not-dark:invert'/>
+        <p>Dark Mode</p>
+      </div>
+      <label className='flex items-center cursor-pointer'>
+        <input type="checkbox" className='hidden' checked={theme === "dark"} onChange={() => setTheme(theme === "dark" ? "light" : "dark")} />
+        <div className='w-10 h-5 bg-gray-300 rounded-full relative'>
+          <div className={`dot absolute w-5 h-5 bg-white rounded-full transition-transform duration-300 ${theme === "dark" ? "translate-x-5" : ""}`}></div>
+        </div>
+      </label>
+    </div>
+
 
     </div>
   );
