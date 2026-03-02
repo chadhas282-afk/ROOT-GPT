@@ -18,7 +18,7 @@ const dummyChats = [
         messages: [
             { content: "Let's build a GPT" }
         ],
-        updatedAt: "2 mins ago"
+        updatedAt: new Date().toISOString()
     },
     {
         _id: "chat_2",
@@ -26,7 +26,7 @@ const dummyChats = [
         messages: [
             { content: "The sidebar filter issue is finally resolved." }
         ],
-        updatedAt: "1 hour ago"
+        updatedAt: new Date().toISOString()
     },
     {
         _id: "chat_3",
@@ -34,7 +34,7 @@ const dummyChats = [
         messages: [
             { content: "Check out the new dark mode palette." }
         ],
-        updatedAt: "Yesterday"
+        updatedAt: new Date().toISOString()
     }
 ];
 export const AppContextProvider = ({ children }) => {
