@@ -4,7 +4,39 @@ import { useState, useEffect } from "react";
 
 
 const AppContext = createContext()
+const dummyUserData = {
+    _id: "user_123",
+    name: "Sahil Chadha",
+    email: "sahil@example.com",
+    avatar: "" // Add a URL here if you have one
+};
 
+const dummyChats = [
+    {
+        _id: "chat_1",
+        name: "Project Ideas",
+        messages: [
+            { content: "Let's build a GPT" }
+        ],
+        updatedAt: "2 mins ago"
+    },
+    {
+        _id: "chat_2",
+        name: "Bug Fixes",
+        messages: [
+            { content: "The sidebar filter issue is finally resolved." }
+        ],
+        updatedAt: "1 hour ago"
+    },
+    {
+        _id: "chat_3",
+        name: "Design Inspo",
+        messages: [
+            { content: "Check out the new dark mode palette." }
+        ],
+        updatedAt: "Yesterday"
+    }
+];
 export const AppContextProvider = ({ children }) => {
 
     const navigate = useNavigate()
