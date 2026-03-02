@@ -14,7 +14,7 @@ const SideBar = () => {
     </button>
     <div className = "flex items-center gap-2 p-3 mt-4 border border-gray-400 dark:border-white/20 rounded-md">
       <img src={assets.search_icon} className = "w-4 not-dark:invert" alt="search image" />
-      <input type="text" placeholder = "Search Conversation" className = "text-xs placeholder:text-gray-400 outline-none"/>
+      <input type="text" placeholder = "Search Conversation" className = "text-xs placeholder:text-gray-500 outline-none"/>
     </div>
     </div>
   );
