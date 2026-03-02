@@ -1,43 +1,12 @@
 import { createContext, use, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import { dummyUserData, dummyChats } from "../assets/assets";
 
 
 const AppContext = createContext()
-const dummyUserData = {
-    _id: "user_123",
-    name: "Sahil Chadha",
-    email: "sahil@example.com",
-    credits: 200,
-    avatar: "" // Add a URL here if you have one
-};
 
-const dummyChats = [
-    {
-        _id: "chat_1",
-        name: "Project Ideas",
-        messages: [
-            { content: "Let's build a GPT" }
-        ],
-        updatedAt: new Date().toISOString()
-    },
-    {
-        _id: "chat_2",
-        name: "Bug Fixes",
-        messages: [
-            { content: "The sidebar filter issue is finally resolved." }
-        ],
-        updatedAt: new Date().toISOString()
-    },
-    {
-        _id: "chat_3",
-        name: "Design Inspo",
-        messages: [
-            { content: "Check out the new dark mode palette." }
-        ],
-        updatedAt: new Date().toISOString()
-    }
-];
+
 export const AppContextProvider = ({ children }) => {
 
     const navigate = useNavigate()
@@ -56,7 +25,7 @@ export const AppContextProvider = ({ children }) => {
 
     const fetchUserChats = async () => {
         setChats(dummyChats)
-        setSelectedChats()
+        setSelectedChats(dummyChats[0])
     }
 
     useEffect(() => {
