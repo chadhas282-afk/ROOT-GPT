@@ -23,15 +23,15 @@ const Login = () => {
         <div className="flex items-center justify-center min-h-screen overflow-hidden relative">
             
             {/* Soft Backdrop Blurs - Matches your Sidebar/App style */}
-            <div className='fixed inset-0 -z-0 pointer-events-none'>
-                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#80609F]/20 rounded-full blur-[120px]' />
-                <div className='absolute right-[-10%] bottom-[-10%] w-[400px] h-[400px] bg-indigo-900/30 rounded-full blur-[100px]' />
+            <div className='fixed inset-0 z-0 pointer-events-none'>
+                <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-[#80609F]/20 rounded-full blur-[120px]' />
+                <div className='absolute right-[-10%] bottom-[-10%] w-100 h-[100 bg-indigo-900/30 rounded-full blur-[100px]' />
             </div>
 
             <form
                 onSubmit={handleSubmit}
                 // Updated to use your #80609F border and backdrop-blur
-                className="relative z-10 w-full sm:w-[400px] text-center bg-[#242124]/40 border border-[#80609F]/30 backdrop-blur-3xl rounded-3xl px-10 py-12 shadow-2xl"
+                className="relative z-10 w-full sm:w-100 text-center bg-[#242124]/40 border border-[#80609F]/30 backdrop-blur-3xl rounded-3xl px-10 py-12 shadow-2xl"
             >
                 <h1 className="text-white text-3xl font-semibold tracking-tight">
                     {state === "login" ? "Welcome Back" : "Create Account"}
@@ -66,7 +66,7 @@ const Login = () => {
                     </div>
                 )}
 
-                <button type="submit" className="mt-8 w-full h-12 rounded-xl text-white font-medium bg-gradient-to-r from-[#A456F7] to-[#3D81F6] hover:opacity-90 transition shadow-lg shadow-indigo-500/20">
+                <button type="submit" className="mt-8 w-full h-12 rounded-xl text-white font-medium bg-linear-to-r from-[#A456F7] to-[#3D81F6] hover:opacity-90 transition shadow-lg shadow-indigo-500/20">
                     {state === "login" ? "Login" : "Create Account"}
                 </button>
 
