@@ -61,7 +61,7 @@ const { chats, setSelectedChats, theme, setTheme, user, navigate } = useAppConte
       </div>
     </div>
 
-    <div className='flex items-center gap-2 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md '>
+    <div className='flex items-center gap-20 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md '>
       <div className='flex items-center gap-2 text-sm'>
         <img src={assets.theme_icon} alt="" className='w-4 not-dark:invert'/>
         <p>Dark Mode</p>

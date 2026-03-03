@@ -3,6 +3,7 @@ import { useState } from 'react';
 import { dummyPlans } from '../assets/assets';
 import Loading from './Loading';
 import { useEffect } from 'react';
+import { Link } from 'react-router-dom';
 
 const Credits = () => {
 
@@ -34,11 +35,19 @@ const Credits = () => {
                 {plan.name}
               </h3>
               <p className='text-2xl font-bold text-purple-600 dark:text-purple-300 mb-4'>{plan.price} 
-                <span>
+                <span className='text-base font-normal text-gray-600 dark:text-purple-200'>
                   {' '}/{plan.credits} Credits
                 </span>
               </p>
+              <ul className='list-disc list-inside text-sm text-gray-700 dark:text-purple-200 space-y-1'>
+                {plan.features.map((feature, index) => (
+                  <li key={index} className='text-gray-600 dark:text-purple-200'>
+                    {feature}
+                  </li>
+                ))}
+              </ul>
             </div>
+            <button className='mt-6 bg-purple-600 hover:bg-purple-700 active:bg-purple-800 text-white font-medium py-2 rounded transition-colors cursor-pointer'>Buy Now</button>
           </div>
         ))}
       </div>
