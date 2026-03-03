@@ -7,9 +7,13 @@ import Community from './pages/community';
 import { useState } from 'react';
 import { assets } from './assets/assets';
 import './assets/prism.css';
+import { useLocation } from 'react-router-dom';
+import Loading from './pages/Loading';
 
 const App = () => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const {pathname} = useLocation();
+  if(pathname === "/loading") return <Loading />;
   return (
     <> 
       {
