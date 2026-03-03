@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { use } from 'react';
 import { Routes, Route } from 'react-router-dom';
 import SideBar from './components/SideBar';
 import ChatBox from './components/ChatBox';
@@ -9,8 +9,11 @@ import { assets } from './assets/assets';
 import './assets/prism.css';
 import { useLocation } from 'react-router-dom';
 import Loading from './pages/Loading';
+import { useAppContext } from './context/AppContext.jsx';
+import Login from './pages/Login.jsx';
 
 const App = () => {
+  const {user} = useAppContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {pathname} = useLocation();
   if(pathname === "/loading") return <Loading />;
@@ -19,7 +22,7 @@ const App = () => {
       {
         !isMenuOpen && <img src={assets.menu_icon} alt="menu" className='w-8 h-8 absolute top-3 left-3 cursor-pointer md:hidden not-dark:invert' onClick={() => setIsMenuOpen(true)} />
       }
-      <div className='dark:bg-linear-to-b from-[#242124] to-[#000000] dark:text-white'>
+      {user ? ( <div className='dark:bg-linear-to-b from-[#242124] to-[#000000] dark:text-white'>
           <div className='flex h-screen w-screen'>
           <SideBar isMenuOpen={isMenuOpen} setIsMenuOpen={setIsMenuOpen} />
           <Routes>
@@ -28,7 +31,11 @@ const App = () => {
             <Route path='/credits' element={<Credits />} />
           </Routes>
         </div>
-      </div>
+      </div>) : (
+        <div className='bg-linear-to-b from-[#242124] to-[#000000] flex items-center justify-center h-screen w-screen'>
+          <Login />
+        </div>
+      )}
     </>
   );
 }

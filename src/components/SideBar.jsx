@@ -66,11 +66,11 @@ const { chats, setSelectedChats, theme, setTheme, user, navigate } = useAppConte
         <img src={assets.theme_icon} alt="" className='w-4 not-dark:invert'/>
         <p>Dark Mode</p>
       </div>
-      <label className=' inline-flex  items-center cursor-pointer'>
-        <input type="checkbox" className='hidden' checked={theme === "dark"} onChange={() => setTheme(theme === "dark" ? "light" : "dark")} />
-        <div className='w-10 h-5 bg-gray-300 rounded-full relative'>
-          <div className={`dot absolute w-5 h-5 bg-white rounded-full transition-transform duration-300 ${theme === "dark" ? "translate-x-5" : ""}`}></div>
+      <label className='relative inline-flex cursor-pointer'>
+        <input type="checkbox" className='sr-only peer' checked={theme === "dark"} onClick={() => setTheme(theme === "dark" ? "light" : "dark")} />
+        <div className='w-9 h-5 bg-gray-400 rounded-full peer-checked:bg-purple-600 transition-all'>
         </div>
+        <span className='absolute left-1 top-1 w-3 h-3 bg-white rounded-full transition-transform peer-checked:translate-x-4'></span>
       </label>
     </div>
       <div className='flex items-center gap-3 p-3 mt-4 border border-gray-300 dark:border-white/15 rounded-md cursor-pointer hover:scale-103 transition-all group'>
