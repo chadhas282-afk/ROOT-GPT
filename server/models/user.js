@@ -1,34 +1,20 @@
 import mongoose from "mongoose";
-import { use } from "react";
+import bcrypt from "bcryptjs";
 
 const userSchema = new mongoose.Schema({
-    name: {
-        type: String,
-        required: true
-    },
-    email: {
-        type: String,
-        required: true,
-        unique: true
-    },
-    password: {
-        type: String,
-        required: true
-    },
-    Credits: {
-        type: Number,
-        default: 20
-    }
+    name: { type: String, required: true },
+    email: { type: String, required: true, unique: true },
+    password: { type: String, required: true },
+    credits: { type: Number, default: 20 } 
 });
 
-userSchema.pre("save", async function (next) {
-    if (!this.isModified("password")) return next();
+userSchema.pre("save", async function () {
+    if (!this.isModified("password")) {
+        return; 
+    }
     const salt = await bcrypt.genSalt(10);
     this.password = await bcrypt.hash(this.password, salt);
-    next();
 });
-
 const User = mongoose.model("User", userSchema);
-
 
 export default User;

@@ -1,21 +1,23 @@
-import 'dotenv/config'; // MUST be the first line
+import 'dotenv/config';
 import express from "express";
 import cors from "cors";
 import connectDB from "./configs/db.js";
+import userRouter from './routes/userRoutes.js';
 
 const app = express();
 
 app.use(cors());
-app.use(express.json());
+app.use(express.json()); 
+
+app.use('/api/user', userRouter);
 
 app.get("/", (req, res) => {
     res.send("Server is live");
 });
-
 const startServer = async () => {
     try {
         await connectDB();
-        const PORT = process.env.PORT || 4000;
+        const PORT = process.env.PORT || 3000;
         app.listen(PORT, () => {
             console.log(`🚀 Server running on http://localhost:${PORT}`);
         });
