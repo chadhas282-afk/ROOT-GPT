@@ -1,6 +1,6 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { useAppContext } from '../context/appContext';
+import { useAppContext } from '../context/AppContext'
 import { assets } from "../assets/assets";
 import Message from './Message';
 
