@@ -32,7 +32,7 @@ const Community = () => {
           <div className='flex flex-wrap max-sm:justify-center gap-5'>
             {images.map((item, index) => (
               <a href={item.imageUrl} target="_blank" className='relative group block rounded-lg overflow-hidden border border-gray-200 dark:border-purple-700 shadow-sm hover:shadow-md transition-shadow duration-300' key={index}>
-                <img src={item.imageUrl} className='w-full h-40 md:h-0.5 2xl:h-62 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out' alt="" />
+                <img src={item.imageUrl} className='w-full h-40 md:h-52 2xl:h-62 object-cover group-hover:scale-105 transition-transform duration-300 ease-in-out' alt="" />
               <p className='absolute bottom-0 right-0 text-xs bg-black/50 backdrop-blur text-white px-4 py-1 rounded-tl-xl opacity-0 group-hover:opacity-100 transition duration-300'>Created by {item.userName}</p>
               </a>
             ))}
