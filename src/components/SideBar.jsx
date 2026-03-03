@@ -1,6 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { useAppContext } from '../context/AppContext';
+import { useAppContext } from '../context/AppContext.jsx';
 import { assets } from "../assets/assets";
 import moment from "moment"
 
