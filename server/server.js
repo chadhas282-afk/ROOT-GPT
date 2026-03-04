@@ -4,18 +4,18 @@ import cors from "cors";
 import connectDB from "./configs/db.js";
 import userRouter from './routes/userRoutes.js';
 import chatRouter from './routes/chatRoutes.js';
+import messageRoutes from './routes/messageRoutes.js';
 
 const app = express();
 
 app.use(cors());
 app.use(express.json()); 
 
+app.get("/", (req, res) => {res.send("Server is live")});
 app.use('/api/user', userRouter);
 app.use('/api/chat', chatRouter);
+app.use('/api/message', messageRoutes);
 
-app.get("/", (req, res) => {
-    res.send("Server is live");
-});
 const startServer = async () => {
     try {
         await connectDB();
