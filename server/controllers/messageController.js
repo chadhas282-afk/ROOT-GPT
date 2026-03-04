@@ -1,4 +1,5 @@
 import Chat from "../models/Chats.js";
+import User from "../models/user.js";
 
 
 export const textMessageController = {
@@ -8,12 +9,34 @@ export const textMessageController = {
             const { chatId, content } = req.body;
 
             const chat = await Chat.findOne({
-                userId, _id: chatId});
-                chat.messages.push({role: "user", content: prompt, timestamp: Date.now(),
-                isImage: false}) 
-                
+                userId, _id: chatId
+            });
+            chat.messages.push({
+                role: "user", content: prompt, timestamp: Date.now(),
+                isImage: false
+            })
+
+            const { choices } = await openai.chat.completions.create({
+                model: "gemini-3-flash-preview",
+                messages: [
+                    {
+                        role: "user",
+                        content: prompt,
+                    },
+                ],
+            });
+
+            const reply = {...choices[0].messages, timestamp: Date.now(),
+                isImage: false}
+
+            res.json({success: true, reply});
+
+            chat.messages.push(reply);
+            await chat.save();
+            await User.updateOne({_id: userId}, {$inc: {credits: -1}})
+
         } catch (error) {
-            
+            res.json({success: false, message: error.message});
         }
     }
 };
