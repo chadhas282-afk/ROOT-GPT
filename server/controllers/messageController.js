@@ -2,6 +2,7 @@ import Chat from "../models/Chats.js";
 import User from "../models/user.js";
 import axios from "axios";
 import imagekit from "../configs/imagekit.js";
+import openai from "../configs/openai.js";
 
 export const textMessageController = {
     sendMessage: async (req, res) => {
@@ -31,7 +32,7 @@ export const textMessageController = {
                 ],
             });
 
-            const reply = {...choices[0].messages, timestamp: Date.now(),
+            const reply = {...choices[0].message, timestamp: Date.now(),
                 isImage: false}
 
             res.json({success: true, reply});
