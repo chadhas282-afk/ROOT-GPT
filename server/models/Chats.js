@@ -1,20 +1,20 @@
 import mongoose from "mongoose";
 
 const ChatSchema = new mongoose.Schema({
-    userId : {
-        type: String,
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
         ref: "User",
         required: true
     },
-    userName : {
+    userName: {
         type: String,
         required: true
     },
-    name : {
+    name: {
         type: String,
         required: true
     },
-    messages : [{
+    messages: [{
         isImage: {
             type: Boolean,
             required: true
