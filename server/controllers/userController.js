@@ -1,7 +1,8 @@
 import User from "../models/user.js"; 
 import jwt from "jsonwebtoken";
 import bcrypt from "bcryptjs";
-
+import Chat from "../models/Chats.js";
+import { Images } from "openai/resources/images.mjs";
 
 
 const generateToken = (id) => {
@@ -63,6 +64,24 @@ export const loginUser = async (req, res) => {
 export const getUser = async (req, res) => {
     try {
         return res.json({ success: true, user: req.user });
+    } catch (error) {
+        res.status(500).json({ success: false, message: error.message });
+    }
+};
+
+export const getPublishedImages = async (req, res) => {
+    try {
+        const publishedImagesMessages = await Chat.aggregate([
+            {$unwind: "$messages"},
+            {$match: {"messages.isPublished": true,
+            "messages.isImage": true}},
+            {$project: {
+                _id: 0,
+                imageUrl: "$messages.content",
+                userName: "$user.name"
+            }}
+        ]);
+        res.json({ success: true, Images: publishedImagesMessages.reverse() });
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

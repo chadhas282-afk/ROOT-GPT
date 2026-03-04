@@ -74,7 +74,6 @@ export const imageMessageController = async (req, res) => {
             return res.status(404).json({ success: false, message: "Chat history not found" });
         }
 
-        // 3. Add User Message to local array
         chat.messages.push({
             role: "user",
             content: prompt,
@@ -82,21 +81,18 @@ export const imageMessageController = async (req, res) => {
             isImage: false
         });
 
-        // 4. Generate Image via ImageKit URL
         const encodedPrompt = encodeURIComponent(prompt);
         const generatedImageUrl = `${process.env.IMAGEKIT_URL_ENDPOINT}/ik-genimg-prompt-${encodedPrompt}/ROOTGPT/${Date.now()}.png?tr=w-800,h-800`;
 
         const aiImageResponse = await axios.get(generatedImageUrl, { responseType: 'arraybuffer' });
         const base64Image = Buffer.from(aiImageResponse.data, 'binary').toString('base64');
 
-        // 5. Upload to ImageKit Storage
         const uploadResponse = await imagekit.upload({
             file: base64Image,
             fileName: `${Date.now()}.png`,
             folder: "ROOTGPT"
         });
 
-        // 6. Prepare Assistant Reply
         const reply = {
             role: "assistant",
             content: uploadResponse.url,
@@ -105,11 +101,9 @@ export const imageMessageController = async (req, res) => {
             isPublished: isPublished || false
         };
 
-        // 7. PERSIST TO DATABASE
         chat.messages.push(reply);
         await chat.save();
 
-        // 8. Deduct Credits
         await User.findByIdAndUpdate(userId, { $inc: { credits: -2 } });
 
         res.json({ success: true, reply });
