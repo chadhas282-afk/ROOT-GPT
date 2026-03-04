@@ -4,7 +4,7 @@ import {textMessageController , imageMessageController} from '../controllers/mes
 
 const messageRouter = express.Router();
 
-messageRouter.post('/text', protect, textMessageController.sendMessage);
+messageRouter.post('/text', protect, textMessageController);
 messageRouter.post('/image', protect, imageMessageController);
 
 export default messageRouter;

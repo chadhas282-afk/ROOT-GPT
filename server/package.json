@@ -19,6 +19,7 @@
     "dotenv": "^17.3.1",
     "dotevn": "^0.0.1-security",
     "express": "^5.2.1",
+    "imagekit": "^6.0.0",
     "jsonwebtoken": "^9.0.3",
     "mongoose": "^9.2.3",
     "openai": "^6.25.0"
