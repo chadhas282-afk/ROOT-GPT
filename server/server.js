@@ -10,14 +10,12 @@ import { stripeWebhooks } from './controllers/webhooks.js';
 
 const app = express();
 
-await connectDB();
-
-app.post("/api/stripe" , express.raw({type: "application/json"}), stripeWebhooks);
+app.post("/api/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
 
 app.use(cors());
-app.use(express.json()); 
+app.use(express.json());
 
-app.get("/", (req, res) => {res.send("Server is live")});
+app.get("/", (req, res) => { res.send("Server is live") });
 app.use('/api/user', userRouter);
 app.use('/api/chat', chatRouter);
 app.use('/api/message', messageRouter);
@@ -32,6 +30,7 @@ const startServer = async () => {
         });
     } catch (error) {
         console.error("Failed to start server:", error.message);
+        process.exit(1);
     }
 };
 
