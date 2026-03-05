@@ -72,13 +72,12 @@ export const purchasePlan = async (req, res) => {
                 }
             ],
             mode: 'payment',
-            // 2. Use cleanOrigin here (No double slashes!)
             success_url: `${cleanOrigin}/loading?session_id={CHECKOUT_SESSION_ID}&transactionId=${transaction._id}`,
             cancel_url: `${cleanOrigin}/`,
             metadata: { 
-                transactionId: transaction._id.toString(),
-                userId: userId.toString()
-            },
+        transactionId: transaction._id.toString(), 
+        appId: "ROOTGPT" 
+    },
         });
 
         res.json({ success: true, url: session.url });

@@ -3,6 +3,7 @@ import Transaction from "../models/Transaction.js";
 import User from "../models/user.js";
 
 export const stripeWebhooks = async (req, res) => {
+    console.log("🔔 WEBHOOK RECEIVED!");
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const sig = req.headers["stripe-signature"];
     let event;
@@ -22,16 +23,18 @@ export const stripeWebhooks = async (req, res) => {
             console.log(`Processing session for App: ${appId}, Transaction: ${transactionId}`);
 
             if (appId === "ROOTGPT") {
-                const transaction = await Transaction.findOne({ 
-                    _id: transactionId, 
-                    isPaid: false 
-                });
+               const transaction = await Transaction.findOne({ _id: transactionId, isPaid: false });
 
                 if (transaction) {
                     const updatedUser = await User.findByIdAndUpdate(
                         transaction.userId, 
                         { $inc: { credits: transaction.credits } },
-                        { new: true }
+                        { new: true },
+                    );
+
+                    await User.findByIdAndUpdate(
+                        transaction.userId, 
+                        { $inc: { credits: transaction.credits } } 
                     );
 
                     transaction.isPaid = true;

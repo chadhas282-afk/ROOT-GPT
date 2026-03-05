@@ -10,7 +10,7 @@ import { stripeWebhooks } from './controllers/webhooks.js';
 
 const app = express();
 
-app.post("/api/stripe", express.raw({ type: "application/json" }), stripeWebhooks);
+app.post("/api/stripe" , express.raw({type: "application/json"}), stripeWebhooks);
 
 app.use(cors());
 app.use(express.json());
@@ -23,14 +23,13 @@ app.use('/api/credit', creditRouter);
 
 const startServer = async () => {
     try {
-        await connectDB();
+        await connectDB(); // ONLY connect here
         const PORT = process.env.PORT || 3000;
         app.listen(PORT, () => {
             console.log(`🚀 Server running on http://localhost:${PORT}`);
         });
     } catch (error) {
         console.error("Failed to start server:", error.message);
-        process.exit(1);
     }
 };
 
