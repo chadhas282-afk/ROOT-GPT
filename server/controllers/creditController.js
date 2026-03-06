@@ -8,7 +8,7 @@ const plans = [
         _id: "basic",
         name: "Basic",
         price: "$10",
-        credits: 100,
+        credits: 200,
         features: ['100 text generations', '50 image generations', 'Standard support']
     },
     {
@@ -40,7 +40,6 @@ export const purchasePlan = async (req, res) => {
         const { planId } = req.body;
         const userId = req.user._id;
         
-        // 1. Get origin and strip the trailing slash immediately in one go
         const rawOrigin = req.headers.origin || "http://localhost:5173";
         const cleanOrigin = rawOrigin.replace(/\/$/, ""); 
 
