@@ -5,7 +5,7 @@ import { protect } from '../middlewares/auth.js';
 const chatRouter = express.Router();
 
 chatRouter.post('/create', protect, createChat);
-chatRouter.get('/get', protect, getChats);
+chatRouter.get('/userchats', protect, getChats);
 chatRouter.post('/delete', protect, deleteChats);
 
 export default chatRouter;
