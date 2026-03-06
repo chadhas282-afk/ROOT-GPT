@@ -10,7 +10,7 @@ import './assets/prism.css';
 import { useLocation } from 'react-router-dom';
 import Loading from './pages/Loading';
 import { useAppContext } from './context/AppContext.jsx';
-import Login from './pages/Login.jsx';
+import Login from './pages/login.jsx';
 import { Toaster } from 'react-hot-toast';
 
 const App = () => {
