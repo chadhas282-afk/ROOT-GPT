@@ -20,26 +20,36 @@ export const AppContextProvider = ({ children }) => {
     const [token, setToken] = useState(localStorage.getItem("token") || null)
     const [loadingUser, setLoadingUser] = useState(true)
 
-    const fetchUser = async () => {
-        try {
-            const data = await axios.get("/api/user/data", {headers:{Authorization: token}});
-            if (data.success) {
-                setUser(data.user);
-            }else{
-                toast.error(data.message || "Failed to fetch user data");
-            }
-        } catch (error) {
-            toast.error(error.message);
-        }finally{
-            setLoadingUser(false);
+   const fetchUser = async () => {
+    try {
+        // Corrected the header format
+        const { data } = await axios.get("/api/user/data", {
+            headers: { Authorization: `Bearer ${token}` } 
+        });
+
+        if (data.success) {
+            setUser(data.user);
+        } else {
+            // If token is invalid, clear it
+            setToken(null);
+            localStorage.removeItem("token");
         }
+    } catch (error) {
+        console.error(error);
+        if (error.response?.status === 401) {
+            setToken(null);
+            localStorage.removeItem("token");
+        }
+    } finally {
+        setLoadingUser(false);
     }
+}
 
     const createNewChat = async () => {
         try {
             if(!user) return toast("Login to create a chat");
             navigate("/")
-        await axios.get("/api/chat/create", {}, {headers:{Authorization: token}});
+        await axios.get("/api/chat/create", {}, {headers: { Authorization: `Bearer ${token}` }});
         await fetchUserChats();
         } catch (error) {
             toast.error(error.message);

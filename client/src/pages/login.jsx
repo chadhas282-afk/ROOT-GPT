@@ -1,6 +1,6 @@
-import React, { useState } from 'react'; // Added import
+import React, { useState } from 'react';
 import { useAppContext } from '../context/AppContext';
-import { toast } from 'react-hot-toast'; // Fixes the ReferenceError
+import { toast } from 'react-hot-toast';
 
 const Login = () => {
     const [state, setState] = useState("login")
@@ -20,7 +20,7 @@ const Login = () => {
     const handleSubmit = async (e) => {
         e.preventDefault()
         const url = state === "login" ? "/api/user/login" : "/api/user/register";
-        
+
         try {
             const { data } = await axios.post(url, formData);
             if (data.success) {
@@ -31,15 +31,15 @@ const Login = () => {
                 toast.error(data.message || "Authentication failed");
             }
         } catch (error) {
-            // Checks if it's an axios error with a response message
+
             toast.error(error.response?.data?.message || error.message);
         }
     }
 
     return (
         <div className="flex items-center justify-center min-h-screen overflow-hidden relative">
-            
-            {/* Soft Backdrop Blurs - Matches your Sidebar/App style */}
+
+
             <div className='fixed inset-0 z-0 pointer-events-none'>
                 <div className='absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-125 h-125 bg-[#80609F]/20 rounded-full blur-[120px]' />
                 <div className='absolute right-[-10%] bottom-[-10%] w-100 h-[100 bg-indigo-900/30 rounded-full blur-[100px]' />
@@ -47,7 +47,7 @@ const Login = () => {
 
             <form
                 onSubmit={handleSubmit}
-                // Updated to use your #80609F border and backdrop-blur
+
                 className="relative z-10 w-full sm:w-100 text-center bg-[#242124]/40 border border-[#80609F]/30 backdrop-blur-3xl rounded-3xl px-10 py-12 shadow-2xl"
             >
                 <h1 className="text-white text-3xl font-semibold tracking-tight">
