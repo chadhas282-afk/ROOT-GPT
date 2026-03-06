@@ -2,7 +2,10 @@ import { createContext, use, useContext } from "react";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
 import { dummyUserData, dummyChats } from "../assets/assets";
+import axios from "axios"
+import toast from "react-hot-toast";
 
+axios.defaults.baseURL = import.meta.env.VITE_SERVER_URL || "http://localhost:3000"
 
 const AppContext = createContext()
 
@@ -14,18 +17,61 @@ export const AppContextProvider = ({ children }) => {
     const [chats, setChats] = useState([])
     const [selectedChats, setSelectedChats] = useState(null)
     const [theme, setTheme] = useState(localStorage.getItem("theme") || "light")
+    const [token, setToken] = useState(localStorage.getItem("token") || null)
+    const [loadingUser, setLoadingUser] = useState(true)
 
     const fetchUser = async () => {
-        setUser(dummyUserData)
+        try {
+            const data = await axios.get("/api/user/data", {headers:{Authorization: token}});
+            if (data.success) {
+                setUser(data.user);
+            }else{
+                toast.error(data.message || "Failed to fetch user data");
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }finally{
+            setLoadingUser(false);
+        }
+    }
+
+    const createNewChat = async () => {
+        try {
+            if(!user) return toast("Login to create a chat");
+            navigate("/")
+        await axios.get("/api/chat/create", {}, {headers:{Authorization: token}});
+        await fetchUserChats();
+        } catch (error) {
+            toast.error(error.message);
+        }
     }
 
     useEffect(() => {
-        fetchUser()
-    }, [])
+        if(token) {
+            fetchUser()
+        }else{
+            setUser(null)
+            setLoadingUser(false)
+        }
+    }, [token])
 
     const fetchUserChats = async () => {
-        setChats(dummyChats)
-        setSelectedChats(dummyChats[0])
+        try {
+            const {data} = await axios.get("/api/chat/userchats", {headers:{Authorization: token}});
+            if(data.success){
+                setChats(data.chats);
+                if(data.chats.length === 0) {
+                    await createNewChat();
+                    return fetchUserChats();
+                }else{
+                    setSelectedChats(data.chats[0]);
+                }
+            }else{
+                toast.error(data.message || "Failed to fetch user chats");
+            }
+        } catch (error) {
+            toast.error(error.message);
+        }
     }
 
     useEffect(() => {
@@ -47,7 +93,7 @@ export const AppContextProvider = ({ children }) => {
     }, [user])
 
     const value = {
-        navigate, user, setUser, chats, setChats, selectedChats, setSelectedChats, theme, setTheme
+        navigate, user, setUser, chats, setChats, selectedChats, setSelectedChats, theme, setTheme, loadingUser, createNewChat, fetchUserChats, token, setToken, axios
     }
 
     return (

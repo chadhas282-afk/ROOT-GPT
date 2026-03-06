@@ -11,14 +11,16 @@ import { useLocation } from 'react-router-dom';
 import Loading from './pages/Loading';
 import { useAppContext } from './context/AppContext.jsx';
 import Login from './pages/Login.jsx';
+import { Toaster } from 'react-hot-toast';
 
 const App = () => {
-  const {user} = useAppContext();
+  const {user, loadingUser} = useAppContext();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const {pathname} = useLocation();
-  if(pathname === "/loading") return <Loading />;
+  if(pathname === "/loading" || loadingUser) return <Loading />;
   return (
-    <> 
+    <>
+      <Toaster />
       {
         !isMenuOpen && <img src={assets.menu_icon} alt="menu" className='w-8 h-8 absolute top-3 left-3 cursor-pointer md:hidden not-dark:invert' onClick={() => setIsMenuOpen(true)} />
       }
