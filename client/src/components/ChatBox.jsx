@@ -24,13 +24,15 @@ const ChatBox = () => {
       const promptCopy = prompt;
       setPrompt("");
 
-      // Add user message to UI immediately
       setMessages(prev => [...prev, { role: "user", content: promptCopy, timestamp: Date.now(), isImage: false }]);
 
-      const { data } = await axios.post(`/api/chat/${mode}`, 
-        { chatId: selectedChats._id, prompt: promptCopy, isPublished }, 
-        { headers: { Authorization: `Bearer ${token}` } }
-      );
+      const {data} = await axios.post(`/api/message/${mode}`, {
+        chatId: selectedChats._id,
+        prompt: promptCopy,
+        isPublished
+      }, {
+        headers: { Authorization: `Bearer ${token}` }
+      });
 
       if (data.success) {
         setMessages(prev => [...prev, data.reply]);
