@@ -72,16 +72,38 @@ export const getUser = async (req, res) => {
 export const getPublishedImages = async (req, res) => {
     try {
         const publishedImagesMessages = await Chat.aggregate([
-            {$unwind: "$messages"},
-            {$match: {"messages.isPublished": true,
-            "messages.isImage": true}},
-            {$project: {
-                _id: 0,
-                imageUrl: "$messages.content",
-                userName: "$user.name"
-            }}
+
+            { $unwind: "$messages" },
+
+            { 
+                $match: {
+                    "messages.isPublished": true,
+                    "messages.isImage": true
+                }
+            },
+
+            {
+                $lookup: {
+                    from: "users",
+                    localField: "userId", 
+                    foreignField: "_id", 
+                    as: "userInfo"     
+                }
+            },
+
+            { $unwind: "$userInfo" },
+
+            {
+                $project: {
+                    _id: 0,
+                    imageUrl: "$messages.content",
+                    userName: "$userInfo.name" 
+                }
+            }
         ]);
-        res.json({ success: true, Images: publishedImagesMessages.reverse() });
+
+        res.json({ success: true, images: publishedImagesMessages.reverse() });
+
     } catch (error) {
         res.status(500).json({ success: false, message: error.message });
     }

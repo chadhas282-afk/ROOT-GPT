@@ -1,19 +1,36 @@
 import React, { useEffect } from 'react';
 import { useState } from 'react';
-import { dummyPublishedImages } from '../assets/assets';
 import Loading from './Loading.jsx';
+import { useAppContext } from '../context/AppContext.jsx';
+import toast from 'react-hot-toast';
 
 const Community = () => {
 
   const [images, setImages] = useState([]);
   const [loading, setLoading] = useState(true);
+  const { axios, token } = useAppContext();
 
   const fetchImages = async () => {
+  try {
 
-    setImages(dummyPublishedImages)
+    const { data } = await axios.get('/api/user/published-images');
+    
+    console.log("API Response:", data);
+
+    if (data.success && Array.isArray(data.images)) {
+      setImages(data.images);
+    } else {
+      setImages([]);
+      toast.error(data.message || "Invalid data format received");
+    }
+  } catch (error) {
+    console.error(error);
+    toast.error("Error fetching images");
+    setImages([]);
+  } finally {
     setLoading(false);
-
   }
+};
 
   useEffect(() => {
     fetchImages();
@@ -28,7 +45,7 @@ const Community = () => {
       <h2 className='text-xl font-semibold mb-6 text-gray-800 dark:text-purple-100'>Community Images</h2>
 
       {
-        images.length > 0 ? (
+        images?.length > 0 ? (
           <div className='flex flex-wrap max-sm:justify-center gap-5'>
             {images.map((item, index) => (
               <a href={item.imageUrl} target="_blank" className='relative group block rounded-lg overflow-hidden border border-gray-200 dark:border-purple-700 shadow-sm hover:shadow-md transition-shadow duration-300' key={index}>
