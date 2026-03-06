@@ -10,7 +10,11 @@ import { stripeWebhooks } from './controllers/webhooks.js';
 
 const app = express();
 
-app.post("/api/stripe" , express.raw({type: "application/json"}), stripeWebhooks);
+app.post(
+    "/api/stripe", 
+    express.raw({ type: "*/*" }),
+    stripeWebhooks
+);
 
 app.use(cors());
 app.use(express.json());

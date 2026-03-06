@@ -3,7 +3,9 @@ import Transaction from "../models/Transaction.js";
 import User from "../models/user.js";
 
 export const stripeWebhooks = async (req, res) => {
-    console.log("🔔 WEBHOOK RECEIVED!");
+   console.log("🔔 WEBHOOK RECEIVED!");
+    console.log("Is body a Buffer?", Buffer.isBuffer(req.body));
+    console.log("Body length:", req.body.length);
     const stripe = new Stripe(process.env.STRIPE_SECRET_KEY);
     const sig = req.headers["stripe-signature"];
     let event;
