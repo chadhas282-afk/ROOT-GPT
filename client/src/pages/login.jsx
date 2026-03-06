@@ -1,5 +1,6 @@
-import React from 'react';
-import { useState } from 'react';
+import React, { useState } from 'react'; // Added import
+import { useAppContext } from '../context/AppContext';
+import { toast } from 'react-hot-toast'; // Fixes the ReferenceError
 
 const Login = () => {
     const [state, setState] = useState("login")
@@ -9,14 +10,30 @@ const Login = () => {
         password: ''
     })
 
+    const { axios, setToken } = useAppContext();
+
     const handleChange = (e) => {
         const { name, value } = e.target
         setFormData(prev => ({ ...prev, [name]: value }))
     }
 
-    const handleSubmit = (e) => {
+    const handleSubmit = async (e) => {
         e.preventDefault()
-        console.log("Form Submitted", formData)
+        const url = state === "login" ? "/api/user/login" : "/api/user/register";
+        
+        try {
+            const { data } = await axios.post(url, formData);
+            if (data.success) {
+                setToken(data.token);
+                localStorage.setItem("token", data.token);
+                toast.success(state === "login" ? "Logged in!" : "Account created!");
+            } else {
+                toast.error(data.message || "Authentication failed");
+            }
+        } catch (error) {
+            // Checks if it's an axios error with a response message
+            toast.error(error.response?.data?.message || error.message);
+        }
     }
 
     return (
