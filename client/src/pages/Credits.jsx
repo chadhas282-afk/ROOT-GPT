@@ -1,7 +1,6 @@
 import React from 'react';
 import { useState } from 'react';
-import { dummyPlans } from '../assets/assets';
-import Loading from './Loading';
+import Loading from './Loading.jsx';
 import { useEffect } from 'react';
 import { Link } from 'react-router-dom';
 import { useAppContext } from '../context/AppContext';
