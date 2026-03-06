@@ -10,6 +10,7 @@ export const stripeWebhooks = async (req, res) => {
 
     try {
         event = stripe.webhooks.constructEvent(req.body, sig, process.env.STRIPE_WEBHOOK_SECRET);
+        console.log("✅ Event Verified! Type:", event.type);
     } catch (err) {
         console.error("❌ Webhook Signature Error:", err.message);
         return res.status(400).send(`Webhook Error: ${err.message}`);
@@ -17,6 +18,7 @@ export const stripeWebhooks = async (req, res) => {
 
     try {
         if (event.type === "checkout.session.completed") {
+            console.log("Session Metadata:", event.data.object.metadata);
             const session = event.data.object;
             const { transactionId, appId } = session.metadata;
 
